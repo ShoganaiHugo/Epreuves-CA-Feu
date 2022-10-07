@@ -52,6 +52,8 @@ function trouverForme(modele, search) {
 			}
 		}
 
+
+
 		if (trouvable === true) {
 			console.log('Trouvé !');
 			console.log('Coordonnées : ' + location[0] + ', ' + location[1]);
@@ -59,25 +61,48 @@ function trouverForme(modele, search) {
 			
 
 
-			// A finir
-			let resultArray = modeleTXT;
+			let resultArray = [];
 			let tirets = '-';
 
 			for (let i = 0; i < modeleTXT.length; i++) {
-				resultArray[i] = tirets.repeat(modeleTXT[i].length);
+				resultArray[i] = '';
 			}
 
-			resultArray[ligne][colonne] = resultArray[ligne][colonne].replace('-', 'h');
+			for (let i = 0; i < modeleTXT.length; i++) {
+				for (let j = 0; j < modeleTXT[i].length; j++) {
+
+					if (i === ligne) {
+						if (j === colonne) {
+							resultArray[i] += searchTXT[0][0];
+						} else if (j === colonne + 1) {
+							resultArray[i] += searchTXT[0][1];
+						} else {
+							resultArray[i] += tirets;
+						}
+
+					} else if (i === ligne + 1) {
+						if (j === colonne) {
+							resultArray[i] += searchTXT[1][0];
+						} else if (j === colonne + 1) {
+							resultArray[i] += searchTXT[1][1];
+						} else {
+							resultArray[i] += tirets;
+						}
+
+					} else {
+						resultArray[i] += tirets;
+					}
+				}
+			}
 
 
-			console.log(resultArray);
+
+			console.log(resultArray.join('\n'));
 
 		} else {
 			console.log('Introuvable');
 		}
-
 	}
-
 }
 
 
