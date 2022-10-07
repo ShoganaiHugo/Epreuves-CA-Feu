@@ -25,25 +25,27 @@ function trouverForme(modele, search) {
 
 		let count = 0;
 		let location = [];
+		let long = 0;
 		let ligne = 0;
 		let colonne = 0;
 		let trouvable = false;
 
 		for (let line = 0; line < modeleTXT.length; line++) {
-			for (let column = 0; column < modeleTXT[line].length; column++) {
-				if (searchTXT[0][0] === modeleTXT[line][column] || searchTXT[0][0] === " ") {
-					if (searchTXT[0][1] === modeleTXT[line][column + 1] || searchTXT[0][1] === " ") {
-						if (searchTXT[1][0] === modeleTXT[line + 1][column] || searchTXT[1][0] === " ") {
-							if (searchTXT[1][1] === modeleTXT[line + 1][column  +1] || searchTXT[1][1] === " ") {
+			for (let column = modeleTXT[line].length; column > 0; column--) {
+				if (searchTXT[0][0] === modeleTXT[line][column - 1] || searchTXT[0][0] === " ") {
+					if (searchTXT[0][1] === modeleTXT[line][column] || searchTXT[0][1] === " ") {
+						if (searchTXT[1][0] === modeleTXT[line + 1][column - 1] || searchTXT[1][0] === " ") {
+							if (searchTXT[1][1] === modeleTXT[line + 1][column] || searchTXT[1][1] === " ") {
 
 								ligne = line;
-								colonne = column;
-								location = [line + 1, longueur(modeleTXT[0]) - column  - 1];
+								colonne = longueur(modeleTXT[0]) - column + 1;
+								location = [line + 1, longueur(modeleTXT[0]) - column];
 								trouvable = true;
 
 								for (let i = 0; i < searchTXT.length; i++) {
 									searchTXT[i] = searchTXT[i].replace(' ', '-');
 								}
+
 
 							}
 						}
@@ -53,6 +55,7 @@ function trouverForme(modele, search) {
 		}
 
 
+		
 
 		if (trouvable === true) {
 			console.log('Trouvé !');
@@ -101,6 +104,7 @@ function trouverForme(modele, search) {
 
 		} else {
 			console.log('Introuvable');
+			console.log(long)
 		}
 	}
 }
