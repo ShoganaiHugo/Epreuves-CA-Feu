@@ -70,8 +70,6 @@ function trouverForme(modele, search) {
 				if (searchTXT[0][0] === modeleTXT[line][column]) {
 					
 					arrayTest = creationTableau(modeleTXT, searchTXT, line, column);
-					console.log('ligne : ', line)
-					console.log('colonne', column)
 
 					if (arrayTest.toString() === searchTXT.toString()) {
 
