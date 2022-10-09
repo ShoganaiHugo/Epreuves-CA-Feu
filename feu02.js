@@ -18,8 +18,8 @@ function creationTableau(arrayModele, arraySearch, line, column) {
 	
 	for (let lignes = 0; lignes < lignesMax; lignes++) {
 		arrayResult[lignes] = '';
-		for (let colonnes = colonnesMax; colonnes > 0; colonnes--) {
-			arrayResult[lignes] += arrayModele[line + lignes][column - colonnes + 4];
+		for (let colonnes = 0; colonnes < colonnesMax; colonnes++) {
+			arrayResult[lignes] += arrayModele[line + lignes][column + colonnes];
 		}
 	}
 
@@ -65,16 +65,19 @@ function trouverForme(modele, search) {
 
 
 		for (let line = 0; line < modeleTXT.length - 1; line++) {
-			for (let column = modeleTXT[line].length - 1; column >= 0; column--) {
+			for (let column = 0; column < modeleTXT[line].length - 1; column++) {
 
-				if (searchTXT[0][searchTXT[0].length - 1] === modeleTXT[line][column]) {
+				if (searchTXT[0][0] === modeleTXT[line][column]) {
 					
 					arrayTest = creationTableau(modeleTXT, searchTXT, line, column);
+					console.log('ligne : ', line)
+					console.log('colonne', column)
 
-					if (arrayTest === searchTXT) {
+					if (arrayTest.toString() === searchTXT.toString()) {
+
 						ligne = line;
-						colonne = longueur(modeleTXT[0]) - column + 1;
-						location = [line + 1, longueur(modeleTXT[0]) - column];
+						colonne = modeleTXT[0].length - column + 1;
+						location = [line + 1, modeleTXT[0].length - column];
 						trouvable = true;
 
 						for (let i = 0; i < searchTXT.length; i++) {
@@ -88,12 +91,10 @@ function trouverForme(modele, search) {
 
 			}
 
-			column = modeleTXT[line].length - 1;
 
 		}
 
 
-		
 
 		if (trouvable === true) {
 			console.log('Trouvé !');
@@ -138,7 +139,8 @@ function trouverForme(modele, search) {
 
 
 
-			console.log(resultArray.join('\n'));
+			//console.log(resultArray.join('\n'));
+			console.log(arrayTest);
 
 		} else {
 			console.log('Introuvable');
