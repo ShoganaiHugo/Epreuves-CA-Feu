@@ -31,15 +31,18 @@ function creationTableau(arrayModele, arraySearch, line, column) {
 				tmp[j] = ' ';
 				tmp = tmp.join('');
 				arrayResult[i] = tmp;
+			} else if (arraySearch[i][j] === '-') {
+				tmp = arrayResult[i].toString();
+				tmp = tmp.split('');
+				tmp[j] = '-';
+				tmp = tmp.join('');
+				arrayResult[i] = tmp;
 			}
 		}
 	}
 
 	return arrayResult;
 }
-
-
-
 
 
 function trouverForme(modele, search) {
@@ -57,39 +60,37 @@ function trouverForme(modele, search) {
 		searchTXT.pop();
 
 		let count = 0;
-		let location = [];
+		let location = [modeleTXT.length, modeleTXT[0].length];
 		let arrayTest = [];
 		let ligne = 0;
 		let colonne = 0;
 		let trouvable = false;
 
+		for (let line = 0; line < modeleTXT.length; line++) {
+			for (let column = 0; column < modeleTXT[line].length; column++) {
 
-		for (let line = 0; line < modeleTXT.length - 1; line++) {
-			for (let column = 0; column < modeleTXT[line].length - 1; column++) {
+				if (searchTXT[0][0] === modeleTXT[line][column] || searchTXT[0][0] === ' ') {
 
-				if (searchTXT[0][0] === modeleTXT[line][column]) {
-					
-					arrayTest = creationTableau(modeleTXT, searchTXT, line, column);
+					if (line + searchTXT.length - 1 <= modeleTXT.length - line && searchTXT[0].length - 1 + column <= modeleTXT.length) {
+						arrayTest = creationTableau(modeleTXT, searchTXT, line, column);
 
-					if (arrayTest.toString() === searchTXT.toString()) {
+						if (arrayTest.toString() === searchTXT.toString()) {
 
-						ligne = line;
-						colonne = modeleTXT[0].length - column + 1;
-						location = [line + 1, modeleTXT[0].length - column];
-						trouvable = true;
+							if (line + 1 <= location[0] && - (column + searchTXT[0].length - 1) + (modeleTXT[0].length) <= location[1]) {
+								ligne = line;
+								colonne = column;
+								location[0] = line + 1;
+								location[1] = - (column + searchTXT[0].length - 1) + (modeleTXT[0].length);
+								trouvable = true;
 
-						for (let i = 0; i < searchTXT.length; i++) {
-							searchTXT[i] = searchTXT[i].replace(' ', '-');
+								for (let i = 0; i < searchTXT.length; i++) {
+									searchTXT[i] = searchTXT[i].replace(' ', '-');
+								}
+							}
 						}
-
-						break;
-					}
-				
+					}			
 				}
-
 			}
-
-
 		}
 
 
@@ -97,9 +98,6 @@ function trouverForme(modele, search) {
 		if (trouvable === true) {
 			console.log('Trouvé !');
 			console.log('Coordonnées : ' + location[0] + ', ' + location[1]);
-			
-			
-
 
 			let resultArray = [];
 			let tirets = '-';
@@ -135,14 +133,10 @@ function trouverForme(modele, search) {
 				}
 			}
 
-
-
-			//console.log(resultArray.join('\n'));
-			console.log(arrayTest);
+			console.log(resultArray.join('\n'));
 
 		} else {
 			console.log('Introuvable');
-			console.log(arrayTest)
 		}
 	}
 }
